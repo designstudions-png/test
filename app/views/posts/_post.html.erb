@@ -1,0 +1,11 @@
+<div id="<%= dom_id post %>" style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #eee;">
+  <h2 style="margin-bottom: 0.5rem;"><%= post.title %></h2>
+
+  <div style="line-height: 1.6; margin-bottom: 1rem;">
+    <%= simple_format post.body %>
+  </div>
+
+  <div style="color: #666; font-size: 0.9rem;">
+    Опубликовано <%= l post.created_at, format: :long if post.created_at %>
+  </div>
+</div>

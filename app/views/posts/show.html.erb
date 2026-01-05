@@ -1,0 +1,33 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @post %>
+
+<hr>
+
+<section id="comments">
+  <h3>Комментарии (<%= @post.comments.count %>)</h3>
+  <div id="comments_list">
+    <%= render @post.comments.where.not(id: nil) %>
+  </div>
+
+  <div style="margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <h4>Добавить комментарий:</h4>
+    <%= form_with(model: [@post, @post.comments.build]) do |f| %>
+      <div style="margin-bottom: 10px;">
+        <%= f.text_area :body, rows: 3, style: "width: 100%; padding: 8px;", placeholder: "Текст комментария..." %>
+      </div>
+      <div>
+        <%= f.submit "Отправить" %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<hr>
+
+<div>
+  <%= link_to "Edit this post", edit_post_path(@post) %> |
+  <%= link_to "Back to posts", posts_path %>
+
+  <%= button_to "Destroy this post", @post, method: :delete %>
+</div>
