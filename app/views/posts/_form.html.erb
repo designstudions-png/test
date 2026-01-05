@@ -20,6 +20,11 @@
     <%= f.text_area :body, rows: 12, placeholder: "О чем вы хотите рассказать?", required: true %>
   </div>
 
+  <div class="field">
+    <%= f.label :images, "Прикрепить изображения" %>
+    <%= f.file_field :images, multiple: true, accept: "image/*" %>
+  </div>
+
   <div style="margin-top: 2rem; display: flex; gap: 1rem; align-items: center;">
     <%= f.submit post.new_record? ? "Опубликовать пост" : "Сохранить изменения", class: "button" %>
     <%= link_to "Отмена", post.persisted? ? post : posts_path, class: "button button-secondary" %>
