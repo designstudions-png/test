@@ -1,33 +1,46 @@
-<p style="color: green"><%= notice %></p>
+<article class="post-full">
+  <header style="margin-bottom: 2rem;">
+    <h1 style="margin-bottom: 0.5rem; font-size: 2.5rem;"><%= @post.title %></h1>
+    <div style="color: var(--text-muted); font-size: 0.95rem;">
+      Опубликовано <%= l @post.created_at, format: :long %>
+    </div>
+  </header>
 
-<%= render @post %>
-
-<hr>
-
-<section id="comments">
-  <h3>Комментарии (<%= @post.comments.count %>)</h3>
-  <div id="comments_list">
-    <%= render @post.comments.where.not(id: nil) %>
+  <div style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 3rem; color: #334155;">
+    <%= simple_format @post.body %>
   </div>
 
-  <div style="margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
-    <h4>Добавить комментарий:</h4>
+  <div style="display: flex; gap: 10px; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-bottom: 4rem;">
+    <%= link_to "← Назад", posts_path, class: "button button-secondary" %>
+    <div style="margin-left: auto; display: flex; gap: 10px;">
+      <%= link_to "Редактировать", edit_post_path(@post), class: "button button-secondary" %>
+      <%= button_to "Удалить", @post, method: :delete,
+                    form: { style: "display: inline-block;" },
+                    class: "button",
+                    style: "background-color: var(--danger-color);",
+                    data: { turbo_confirm: "Вы уверены?" } %>
+    </div>
+  </div>
+</article>
+
+<section id="comments">
+  <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Комментарии (<%= @post.comments.count %>)</h2>
+
+  <div id="comments_list">
+    <% if @post.comments.exists? %>
+      <%= render @post.comments.where.not(id: nil).order(created_at: :asc) %>
+    <% else %>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">Комментариев пока нет.</p>
+    <% end %>
+  </div>
+
+  <div style="margin-top: 2rem; padding: 1.5rem; background: #fff; border: 1px solid var(--border-color); border-radius: 12px;">
+    <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Добавить комментарий</h3>
     <%= form_with(model: [@post, @post.comments.build]) do |f| %>
-      <div style="margin-bottom: 10px;">
-        <%= f.text_area :body, rows: 3, style: "width: 100%; padding: 8px;", placeholder: "Текст комментария..." %>
+      <div class="field">
+        <%= f.text_area :body, rows: 3, placeholder: "Что вы об этом думаете?", required: true %>
       </div>
-      <div>
-        <%= f.submit "Отправить" %>
-      </div>
+      <%= f.submit "Опубликовать", class: "button" %>
     <% end %>
   </div>
 </section>
-
-<hr>
-
-<div>
-  <%= link_to "Edit this post", edit_post_path(@post) %> |
-  <%= link_to "Back to posts", posts_path %>
-
-  <%= button_to "Destroy this post", @post, method: :delete %>
-</div>

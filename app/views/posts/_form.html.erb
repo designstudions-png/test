@@ -1,27 +1,27 @@
-<%= form_with(model: post) do |form| %>
+<%= form_with(model: post) do |f| %>
   <% if post.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
-      <ul>
-        <% post.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+    <div class="alert">
+      <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">При сохранении возникли ошибки:</h2>
+      <ul style="margin: 0; padding-left: 1.2rem;">
+        <% post.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="field">
+    <%= f.label :title, "Заголовок поста" %>
+    <%= f.text_field :title, placeholder: "Введите название...", required: true %>
   </div>
 
-  <div>
-    <%= form.label :body, style: "display: block" %>
-    <%= form.textarea :body %>
+  <div class="field">
+    <%= f.label :body, "Текст поста" %>
+    <%= f.text_area :body, rows: 12, placeholder: "О чем вы хотите рассказать?", required: true %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div style="margin-top: 2rem; display: flex; gap: 1rem; align-items: center;">
+    <%= f.submit post.new_record? ? "Опубликовать пост" : "Сохранить изменения", class: "button" %>
+    <%= link_to "Отмена", post.persisted? ? post : posts_path, class: "button button-secondary" %>
   </div>
 <% end %>

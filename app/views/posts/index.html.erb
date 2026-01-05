@@ -1,16 +1,26 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Posts" %>
-
-<h1>Posts</h1>
+<header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+  <h1 style="margin: 0;">Мой Блог</h1>
+  <%= link_to "Новый пост", new_post_path, class: "button" %>
+</header>
 
 <div id="posts">
-  <% @posts.each do |post| %>
-    <%= render post %>
-    <p>
-      <%= link_to "Show this post", post %>
-    </p>
+  <% if @posts.any? %>
+    <% @posts.each do |post| %>
+      <div class="post-item">
+        <h2 style="margin-bottom: 0.5rem;"><%= link_to post.title, post %></h2>
+        <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+          <%= l post.created_at, format: :long %>
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <%= truncate(post.body, length: 240) %>
+        </div>
+        <%= link_to "Читать далее →", post, style: "font-weight: 500;" %>
+      </div>
+    <% end %>
+  <% else %>
+    <div style="text-align: center; padding: 3rem; color: var(--text-muted);">
+      <p>Пока здесь ничего нет. Станьте первым, кто напишет пост!</p>
+      <%= link_to "Написать первый пост", new_post_path, class: "button" %>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New post", new_post_path %>
