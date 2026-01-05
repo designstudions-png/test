@@ -3,7 +3,7 @@
     <%= simple_format comment.body %>
   </div>
 
-  <div class="comment-meta" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; pt: 0.75rem; margin-top: 0.75rem;">
+  <div class="comment-meta" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 1rem; margin-top: 1rem;">
     <span style="font-size: 0.85rem; color: var(--text-muted);">
       <%= time_ago_in_words(comment.created_at) %> назад
     </span>
