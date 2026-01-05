@@ -7,23 +7,23 @@
   <% if @posts.any? %>
     <% @posts.each do |post| %>
       <div class="post-item">
-        <h2 style="margin-bottom: 0.5rem;"><%= link_to post.title, post %></h2>
-        <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
-          <%= l post.created_at, format: :long %>
+        <div class="post-content">
+          <h2 style="margin-bottom: 0.5rem;"><%= link_to post.title, post %></h2>
+          <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+            <%= l post.created_at, format: :long %>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <%= truncate(post.body, length: 240) %>
+          </div>
+          <%= link_to "Читать далее →", post, style: "font-weight: 500;" %>
         </div>
+
         <% if post.images.attached? %>
-          <div style="display: flex; gap: 10px; margin-bottom: 1rem; overflow-x: auto; padding-bottom: 5px;">
-            <% post.images.each do |image| %>
-              <%= image_tag image,
-                            style: "border-radius: 8px; max-height: 150px; width: auto; object-fit: cover; border: 1px solid var(--border-color);" %>
-            <% end %>
+          <div class="post-image">
+            <%= image_tag post.images.first, alt: post.title %>
           </div>
         <% end %>
-
-        <div style="margin-bottom: 1rem;">
-          <%= truncate(post.body, length: 240) %>
-        </div>
-        <%= link_to "Читать далее →", post, style: "font-weight: 500;" %>
       </div>
     <% end %>
   <% else %>
