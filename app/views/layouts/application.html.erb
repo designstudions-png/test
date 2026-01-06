@@ -24,22 +24,22 @@
   </head>
 
   <body>
-    <nav style="background: white; border-bottom: 1px solid var(--border-color); padding: 1.25rem 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-      <div style="max-width: 800px; margin: 0 auto; display: flex; justify-content: center; gap: 2rem; font-weight: 600; font-size: 1.1rem; align-items: center;">
+    <nav style="background: white; border-bottom: 1px solid var(--border-color); padding: 1rem 1.5rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+      <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: flex-start; gap: 1.5rem; font-weight: 600; font-size: 1rem; align-items: center; white-space: nowrap;">
         <%= link_to "🏠 Главная", root_path, style: "text-decoration: none; color: var(--text-main);" %>
-        <%= link_to "✍️ Написать пост", new_post_path, style: "text-decoration: none; color: var(--text-main);" %>
+        <%= link_to "✍️ Написать", new_post_path, style: "text-decoration: none; color: var(--text-main);" %>
 
-        <%= form_with url: posts_path, method: :get, style: "display: flex; gap: 0.5rem; margin-left: 1rem;" do |f| %>
-          <%= f.text_field :query, value: params[:query], placeholder: "Поиск по постам и комментариям...", style: "padding: 0.4rem 0.8rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.9rem; min-width: 250px;" %>
+        <%= form_with url: posts_path, method: :get, style: "display: flex; gap: 0.5rem; margin-left: 0.5rem; flex-grow: 1; max-width: 400px;" do |f| %>
+          <%= f.text_field :query, value: params[:query], placeholder: "Поиск...", style: "width: 100%; padding: 0.4rem 0.8rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.9rem;" %>
           <%= f.submit "🔍", name: nil, style: "background: none; border: none; cursor: pointer; font-size: 1.1rem;" %>
         <% end %>
 
-        <div style="margin-left: auto; display: flex; gap: 1.5rem; font-size: 0.9rem; align-items: center;">
+        <div style="margin-left: auto; display: flex; gap: 1rem; font-size: 0.9rem; align-items: center;">
           <% if logged_in? %>
-            <span style="color: #666;">
+            <span style="color: #666; white-space: nowrap;">
               <%= current_user.email %> (<%= current_user.role %>)
             </span>
-            <%= button_to "Выйти", session_path, method: :delete, style: "background: none; border: none; color: #d9534f; cursor: pointer; font-weight: 600; padding: 0; font-family: inherit; font-size: inherit;" %>
+            <%= button_to "Выйти", session_path, method: :delete, style: "background: none; border: none; color: #d9534f; cursor: pointer; font-weight: 600; padding: 0; font-family: inherit; font-size: inherit; white-space: nowrap;" %>
           <% else %>
             <%= link_to "Регистрация", new_registration_path, style: "text-decoration: none; color: var(--text-main);" %>
             <%= link_to "Вход", new_session_path, style: "text-decoration: none; color: var(--text-main);" %>
