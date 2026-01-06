@@ -50,9 +50,15 @@
     <div style="margin-top: 2rem; padding: 1.5rem; background: #fff; border: 1px solid var(--border-color); border-radius: 12px;">
       <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Добавить комментарий</h3>
       <%= form_with(model: [@post, @post.comments.build]) do |f| %>
-        <div class="field">
+        <div class="field" style="margin-bottom: 1rem;">
           <%= f.text_area :body, rows: 3, placeholder: "Что вы об этом думаете?", required: true %>
         </div>
+
+        <div class="field" style="margin-bottom: 1rem;">
+          <%= f.label :images, "Добавить изображения", style: "display: block; margin-bottom: 0.5rem; font-size: 0.9rem;" %>
+          <%= f.file_field :images, multiple: true, accept: "image/*", style: "font-size: 0.85rem;" %>
+        </div>
+
         <%= f.submit "Опубликовать", class: "button" %>
       <% end %>
     </div>

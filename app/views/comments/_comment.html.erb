@@ -3,6 +3,16 @@
     <%= simple_format comment.body %>
   </div>
 
+  <% if comment.images.attached? %>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1rem;">
+      <% comment.images.each do |image| %>
+        <div style="max-width: 200px; border-radius: 4px; overflow: hidden; border: 1px solid var(--border-color);">
+          <%= image_tag image, style: "width: 100%; height: auto; display: block;" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="comment-meta" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 1rem; margin-top: 1rem;">
     <span style="font-size: 0.85rem; color: var(--text-muted);">
       <strong><%= comment.user&.email || "Аноним" %></strong> • <%= time_ago_in_words(comment.created_at) %> назад
