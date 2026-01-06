@@ -2,7 +2,7 @@
   <header style="margin-bottom: 2rem;">
     <h1 style="margin-bottom: 0.5rem; font-size: 2.5rem;"><%= @post.title %></h1>
     <div style="color: var(--text-muted); font-size: 0.95rem;">
-      Опубликовано <%= l @post.created_at, format: :long %>
+      Опубликовано <%= l @post.created_at, format: :long %> • Автор: <%= @post.user&.email || "Аноним" %>
     </div>
   </header>
 
