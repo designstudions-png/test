@@ -25,9 +25,21 @@
 
   <body>
     <nav style="background: white; border-bottom: 1px solid var(--border-color); padding: 1.25rem 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-      <div style="max-width: 800px; margin: 0 auto; display: flex; justify-content: center; gap: 3rem; font-weight: 600; font-size: 1.1rem;">
+      <div style="max-width: 800px; margin: 0 auto; display: flex; justify-content: center; gap: 2rem; font-weight: 600; font-size: 1.1rem; align-items: center;">
         <%= link_to "🏠 Главная", root_path, style: "text-decoration: none; color: var(--text-main);" %>
         <%= link_to "✍️ Написать пост", new_post_path, style: "text-decoration: none; color: var(--text-main);" %>
+
+        <div style="margin-left: auto; display: flex; gap: 1.5rem; font-size: 0.9rem; align-items: center;">
+          <% if logged_in? %>
+            <span style="color: #666;">
+              <%= current_user.email %> (<%= current_user.role %>)
+            </span>
+            <%= button_to "Выйти", session_path, method: :delete, style: "background: none; border: none; color: #d9534f; cursor: pointer; font-weight: 600; padding: 0; font-family: inherit; font-size: inherit;" %>
+          <% else %>
+            <%= link_to "Регистрация", new_registration_path, style: "text-decoration: none; color: var(--text-main);" %>
+            <%= link_to "Вход", new_session_path, style: "text-decoration: none; color: var(--text-main);" %>
+          <% end %>
+        </div>
       </div>
     </nav>
 

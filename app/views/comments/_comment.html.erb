@@ -8,9 +8,11 @@
       <%= time_ago_in_words(comment.created_at) %> назад
     </span>
 
-    <%= button_to "Удалить", [comment.post, comment],
-                  method: :delete,
-                  class: "delete-link",
-                  data: { turbo_confirm: "Удалить этот комментарий?" } %>
+    <% if comment.user == current_user || admin? %>
+      <%= button_to "Удалить", [comment.post, comment],
+                    method: :delete,
+                    class: "delete-link",
+                    data: { turbo_confirm: "Удалить этот комментарий?" } %>
+    <% end %>
   </div>
 </div>

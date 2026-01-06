@@ -22,14 +22,16 @@
 
   <div style="display: flex; gap: 10px; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-bottom: 4rem;">
     <%= link_to "← Назад", posts_path, class: "button button-secondary" %>
-    <div style="margin-left: auto; display: flex; gap: 10px;">
-      <%= link_to "Редактировать", edit_post_path(@post), class: "button button-secondary" %>
-      <%= button_to "Удалить", @post, method: :delete,
-                    form: { style: "display: inline-block;" },
-                    class: "button",
-                    style: "background-color: var(--danger-color);",
-                    data: { turbo_confirm: "Вы уверены?" } %>
-    </div>
+    <% if @post.user == current_user || admin? %>
+      <div style="margin-left: auto; display: flex; gap: 10px;">
+        <%= link_to "Редактировать", edit_post_path(@post), class: "button button-secondary" %>
+        <%= button_to "Удалить", @post, method: :delete,
+                      form: { style: "display: inline-block;" },
+                      class: "button",
+                      style: "background-color: var(--danger-color);",
+                      data: { turbo_confirm: "Вы уверены?" } %>
+      </div>
+    <% end %>
   </div>
 </article>
 
@@ -44,13 +46,21 @@
     <% end %>
   </div>
 
-  <div style="margin-top: 2rem; padding: 1.5rem; background: #fff; border: 1px solid var(--border-color); border-radius: 12px;">
-    <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Добавить комментарий</h3>
-    <%= form_with(model: [@post, @post.comments.build]) do |f| %>
-      <div class="field">
-        <%= f.text_area :body, rows: 3, placeholder: "Что вы об этом думаете?", required: true %>
-      </div>
-      <%= f.submit "Опубликовать", class: "button" %>
-    <% end %>
-  </div>
+  <% if logged_in? %>
+    <div style="margin-top: 2rem; padding: 1.5rem; background: #fff; border: 1px solid var(--border-color); border-radius: 12px;">
+      <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Добавить комментарий</h3>
+      <%= form_with(model: [@post, @post.comments.build]) do |f| %>
+        <div class="field">
+          <%= f.text_area :body, rows: 3, placeholder: "Что вы об этом думаете?", required: true %>
+        </div>
+        <%= f.submit "Опубликовать", class: "button" %>
+      <% end %>
+    </div>
+  <% else %>
+    <div style="margin-top: 2rem; padding: 1.5rem; background: #f8fafc; border: 1px dashed var(--border-color); border-radius: 12px; text-align: center;">
+      <p style="color: var(--text-muted);">
+        <%= link_to "Войдите", new_session_path %> или <%= link_to "зарегистрируйтесь", new_registration_path %>, чтобы оставить комментарий.
+      </p>
+    </div>
+  <% end %>
 </section>

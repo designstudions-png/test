@@ -4,6 +4,15 @@ require "open-uri"
 puts "Cleaning up database..."
 Comment.destroy_all
 Post.destroy_all
+User.destroy_all
+
+puts "Creating admin user..."
+admin = User.create!(
+  email: "admin@example.com",
+  password: "password",
+  password_confirmation: "password",
+  role: :admin
+)
 
 puts "Creating sample posts and comments..."
 
@@ -44,7 +53,8 @@ sample_comments = [
 sample_posts.each do |post_data|
   post = Post.create!(
     title: post_data[:title],
-    body: post_data[:body]
+    body: post_data[:body],
+    user: admin
   )
 
   # Attach image via Active Storage
@@ -61,7 +71,10 @@ sample_posts.each do |post_data|
 
   # Create random comments
   rand(3..6).times do
-    post.comments.create!(body: sample_comments.sample)
+    post.comments.create!(
+      body: sample_comments.sample,
+      user: admin
+    )
   end
 end
 

@@ -1,6 +1,8 @@
 <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
   <h1 style="margin: 0;">Мой Блог</h1>
-  <%= link_to "Новый пост", new_post_path, class: "button" %>
+  <% if logged_in? %>
+    <%= link_to "Новый пост", new_post_path, class: "button" %>
+  <% end %>
 </header>
 
 <div id="posts">
@@ -28,8 +30,10 @@
     <% end %>
   <% else %>
     <div style="text-align: center; padding: 3rem; color: var(--text-muted);">
-      <p>Пока здесь ничего нет. Станьте первым, кто напишет пост!</p>
-      <%= link_to "Написать первый пост", new_post_path, class: "button" %>
+      <p>Пока здесь ничего нет. <%= "Станьте первым, кто напишет пост!" if logged_in? %></p>
+      <% if logged_in? %>
+        <%= link_to "Написать первый пост", new_post_path, class: "button" %>
+      <% end %>
     </div>
   <% end %>
 </div>
