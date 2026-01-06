@@ -29,6 +29,11 @@
         <%= link_to "🏠 Главная", root_path, style: "text-decoration: none; color: var(--text-main);" %>
         <%= link_to "✍️ Написать пост", new_post_path, style: "text-decoration: none; color: var(--text-main);" %>
 
+        <%= form_with url: posts_path, method: :get, style: "display: flex; gap: 0.5rem; margin-left: 1rem;" do |f| %>
+          <%= f.text_field :query, value: params[:query], placeholder: "Поиск по постам и комментариям...", style: "padding: 0.4rem 0.8rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.9rem; min-width: 250px;" %>
+          <%= f.submit "🔍", name: nil, style: "background: none; border: none; cursor: pointer; font-size: 1.1rem;" %>
+        <% end %>
+
         <div style="margin-left: auto; display: flex; gap: 1.5rem; font-size: 0.9rem; align-items: center;">
           <% if logged_in? %>
             <span style="color: #666;">

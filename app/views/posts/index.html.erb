@@ -5,6 +5,13 @@
   <% end %>
 </header>
 
+<% if params[:query].present? %>
+  <div style="margin-bottom: 2rem; padding: 1rem; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px;">
+    Результаты поиска по запросу: <strong>"<%= params[:query] %>"</strong>
+    <%= link_to "Сбросить", root_path, style: "margin-left: 1rem; font-size: 0.9rem;" %>
+  </div>
+<% end %>
+
 <div id="posts">
   <% if @posts.any? %>
     <% @posts.each do |post| %>

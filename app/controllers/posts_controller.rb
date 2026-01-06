@@ -5,7 +5,14 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    if params[:query].present?
+      query = "%#{params[:query]}%"
+      @posts = Post.left_outer_joins(:comments)
+                   .where("posts.title LIKE ? OR posts.body LIKE ? OR comments.body LIKE ?", query, query, query)
+                   .distinct
+    else
+      @posts = Post.all
+    end
   end
 
   # GET /posts/1 or /posts/1.json
